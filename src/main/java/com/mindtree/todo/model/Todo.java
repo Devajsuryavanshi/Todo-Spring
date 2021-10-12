@@ -1,13 +1,20 @@
 package com.mindtree.todo.model;
+import javax.validation.constraints.*;
 
 import java.util.Date;
 
 public class Todo {
     private int id;
     private String user;
+    
+    @Size(min=8, message="Enter atleast 8 characters")
     private String desc;
     private Date targetDate;
     private boolean isDone;
+    
+    public Todo() {
+    	super();
+    }
 
     public Todo(int id, String user, String desc, Date targetDate,
             boolean isDone) {

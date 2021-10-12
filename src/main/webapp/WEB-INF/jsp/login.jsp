@@ -9,31 +9,31 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.5/css/bootstrap.css">
 </head>
 <body>
-<h1 style="text-align: center">Welcome to Spring Login Page</h1>
+<%@ include file="common/navbar.jspf" %>
 <br>
-      <div class='login'>
+      <div class='login'  style="text-align: center; display:block">
           <div class='loginLogo'>
-              <h1>Sign in</h1>
+              <h2>Sign in</h2>
           </div>
-          <div id= "form" style="text-align: center;">
+          <div id= "form" style="text-align:center; display:inline-block">
           <table>
             <tr>
                 <td>
                     <form autocomplete="off" method="post">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" id="Name" name="name" required>
+                            <input type="text" class="form-control" id="Name" name="name" required>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required>
+                            <input type="password" id="password" name="password" class="form-control" required>
                         </div>
                         <div class="form-group">
-                            <input type="submit" name="Login" class="button btn">
-                            <button onclick="regPage()" class="button btn">Register</button>
+                            <input type="submit" name="Login" class="btn btn-success">
+                            <button onclick="regPage()" class="btn btn-success">Register</button>
                         </div>
                     </form>
-                    <mark>${message}</mark>
+                    <p class="text-danger">${message}</p>
                 </td>
             </tr>
             </table>

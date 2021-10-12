@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="webjars/bootstrap/3.3.5/css/bootstrap.css">
 </head>
 <body>
+<%@ include file="common/navbar.jspf" %>
+<br>
 
 <h2 style="text-align: center">Hi! ${name}, Welcome to the Todo App.</h2>
 
