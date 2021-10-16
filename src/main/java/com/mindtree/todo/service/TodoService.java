@@ -8,6 +8,7 @@ import com.mindtree.todo.model.Todo;
 
 import org.springframework.stereotype.Service;
 
+//This Class is no longer in use after adding Database. It is just there for reference.
 @Service
 public class TodoService {
     private static List<Todo> todos = new ArrayList<Todo>();

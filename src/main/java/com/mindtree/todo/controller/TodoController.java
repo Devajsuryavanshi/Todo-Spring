@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.mindtree.todo.JPA.TodoRepositoryJpa;
 import com.mindtree.todo.model.Todo;
 import com.mindtree.todo.service.TodoService;
 
@@ -29,6 +30,9 @@ public class TodoController {
 	@Autowired
 	TodoService todos;
 	
+	@Autowired
+	TodoRepositoryJpa repo;
+	
 	@InitBinder
 	protected void InitBinder(WebDataBinder binder) {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -38,7 +42,8 @@ public class TodoController {
 	@RequestMapping(value="/todo", method=RequestMethod.GET) 
 	public String todoPage(ModelMap model){
 		String name = getLoggedInUserName(model);
-		model.put("todos",todos.retrieveTodos(name));
+		model.put("todos",repo.findByUsername(name));
+	//model.put("todos",todos.retrieveTodos(name)); //This code uses list instead
 		return "todo";
 	}
 
@@ -54,13 +59,15 @@ public class TodoController {
 	
 	@RequestMapping(value="/delete-todo", method=RequestMethod.GET)
 	public String deletetodo(@RequestParam int id) {
-		todos.deleteTodo(id);
+		repo.deleteById(id);
+		//todos.deleteTodo(id); This code uses list instead of databasse
 		return "redirect:todo";
 	}
 	
 	@RequestMapping(value="/update-todo", method=RequestMethod.GET)
 	public String updatetodoPage(@RequestParam int id, ModelMap model) {
-		Todo todo = todos.getTodoById(id);
+		Todo todo = repo.findById(id);
+		//Todo todo = todos.getTodoById(id); //For List.
 		model.put("todo", todo);
 		return "addtodo";
 	}
@@ -74,7 +81,9 @@ public class TodoController {
 			todo.setUser(getLoggedInUserName(model));
 			String message = "Task has been updated Succefully.";
 			model.put("message", message);
-			todos.updateTodo(todo);
+			repo.deleteById(todo.getId());
+			repo.save(todo);
+			// todos.updateTodo(todo); //For List
 			return "addtodo";
 		}
 	}
@@ -88,6 +97,10 @@ public class TodoController {
 		String message = "Task has been added to the list";
 		model.put("message", message);
 		String name = getLoggedInUserName(model);
+		// Saving to Database.
+		todo.setUser(name);
+		repo.save(todo);
+		//Below code adds the todo object to list.
 		todos.addTodo(name, todo.getDesc(), todo.getTargetDate(), false);
 		return "addtodo";
 	}

@@ -1,14 +1,19 @@
 package com.mindtree.todo.model;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 
 import java.util.Date;
 
+@Entity
 public class Todo {
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String user;
-    
+    private String username;
     @Size(min=8, message="Enter atleast 8 characters")
-    private String desc;
+    private String description;
     private Date targetDate;
     private boolean isDone;
     
@@ -20,8 +25,8 @@ public class Todo {
             boolean isDone) {
         super();
         this.id = id;
-        this.user = user;
-        this.desc = desc;
+        this.username = user;
+        this.description = desc;
         this.targetDate = targetDate;
         this.isDone = isDone;
     }
@@ -35,19 +40,19 @@ public class Todo {
     }
 
     public String getUser() {
-        return user;
+        return username;
     }
 
     public void setUser(String user) {
-        this.user = user;
+        this.username = user;
     }
 
     public String getDesc() {
-        return desc;
+        return description;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+        this.description = desc;
     }
 
     public Date getTargetDate() {
@@ -96,7 +101,7 @@ public class Todo {
     public String toString() {
         return String.format(
                 "Todo [id=%s, user=%s, desc=%s, targetDate=%s, isDone=%s]", id,
-                user, desc, targetDate, isDone);
+                username, description, targetDate, isDone);
     }
 
 }
